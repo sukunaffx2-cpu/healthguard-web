@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Health Monitor Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <i class="fa-solid fa-heart-pulse"></i>
+                    <span>HealthGuard</span>
+                </div>
+            </div> 
+            <nav class="sidebar-nav">
+                <a href="index.html" class="nav-item">
+                    <i class="fa-solid fa-chart-line"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="patientslist.html" class="nav-item">
+                    <i class="fa-solid fa-user-injured"></i>
+                    <span>Patients</span>
+                </a>
+                <a href="history.html" class="nav-item">
+                    <i class="fa-solid fa-history"></i>
+                    <span>History</span>
+                </a>
+                <a href="settings.html" class="nav-item">
+                    <i class="fa-solid fa-gear"></i>
+                    <span>Settings</span>
+                </a>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-info">
+                    <div class="user-avatar"><i class="fa-solid fa-user-doctor"></i></div>
+                    <div class="user-details">
+                        <span class="user-name">Dr. Smith</span>
+                        <span class="user-role">Administrator</span>
+                    </div>
+                </div> 
+            </div> 
+        </aside>
+
+        <main class="main-content">
+            <header class="top-header">
+                <div class="header-left">
+                    <h1>Patient Monitoring Dashboard</h1>
+                    <p class="last-updated">Last updated: <span id="lastUpdateTime">--:--:--</span></p>
+                </div>
+                <div class="header-right">
+                    <button id="emergencyBtn" class="emergency-btn">
+                        <i class="fas fa-exclamation-triangle"></i> EMERGENCY
+                    </button>
+                    <div class="connection-status connected">
+                        <i class="fa-solid fa-wifi"></i>
+                        <span>Online</span>
+                    </div>
+                </div>
+            </header>
+
+            <section class="health-cards">
+                <div class="health-card heart-rate">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-heart"></i></div>
+                        <span class="card-title">Heart Rate</span>
+                    </div>
+                    <div class="card-value">
+                        <span class="value" id="heartRate">--</span>
+                        <span class="unit">BPM</span>
+                    </div>
+                    <div class="card-status normal">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Normal</span>
+                    </div>
+                </div> 
+
+                <div class="health-card temperature">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-thermometer"></i></div>
+                        <span class="card-title">Body Temp</span>
+                    </div>
+                    <div class="card-value">
+                        <span class="value" id="temperature">--</span>
+                        <span class="unit">°F</span>
+                    </div>
+                    <div class="card-status normal">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Normal</span>
+                    </div>
+                </div> 
+
+                <div class="health-card spo2">
+                    <div class="card-header">
+                        <div class="card-icon"><i class="fa-solid fa-lungs"></i></div>
+                        <span class="card-title">Blood Oxygen</span>
+                    </div>
+                    <div class="card-value">
+                        <span class="value" id="spo2">--</span>
+                        <span class="unit">%</span>
+                    </div>
+                    <div class="card-status normal">
+                        <i class="fa-solid fa-check-circle"></i>
+                        <span>Normal</span>
+                    </div>
+                </div>
+
+                <div class="health-card bp-monitor">
+                    <div class="card-header">
+                        <div class="card-icon" style="background: var(--neon-purple-dim); color: var(--neon-purple);">
+                            <i class="fa-solid fa-gauge-high"></i>
+                        </div>
+                        <span class="card-title">Blood Pressure</span>
+                    </div>
+                    <div class="card-value">
+                        <span class="value" id="bloodPressure" style="color: var(--neon-purple);">120/80</span>
+                        <span class="unit">mmHg</span>
+                    </div>
+                    <div class="card-status normal" id="bpStatus">
+                        <i class="fa-solid fa-heart-pulse"></i>
+                        <span>Stable</span>
+                    </div>
+                </div>
+
+                <div class="health-card active-patient-mini" style="position: relative; overflow: hidden;">
+                    <i class="fa-solid fa-file-medical" style="position: absolute; right: -10px; bottom: -10px; font-size: 5rem; opacity: 0.07; transform: rotate(-15deg); color: var(--neon-cyan);"></i>
+                    <div class="card-header">
+                        <div class="card-icon" style="background: var(--neon-cyan-dim); color: var(--neon-cyan);">
+                            <i class="fa-solid fa-user-check"></i>
+                        </div>
+                        <span class="card-title">Active Patient</span>
+                    </div>
+                    <div class="card-value" style="margin-bottom: 5px;">
+                        <span class="value" id="activeName" style="font-size: 1.6rem; color: var(--neon-cyan);">No Patient</span>
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 10px;">
+                        ID: <span id="activeID">--</span> | Age: <span id="activeAge">--</span>
+                    </div>
+                    <div style="display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 1;">
+                        <div class="card-status normal" id="activeCondition">
+                            <i class="fa-solid fa-check-circle"></i>
+                            <span>Stable</span>
+                        </div>
+                        <button id="cardSubmitBtn" class="view-all-btn" style="padding: 5px 12px; font-size: 0.75rem; border: 1px solid var(--neon-cyan); background: rgba(0, 255, 242, 0.05);">SAVE</button>
+                    </div>
+                </div>
+
+                <div class="health-card qr-card" id="qr-section" style="text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 200px;">
+                    <div id="qrcode" style="display: inline-block; padding: 10px; background: white; border-radius: 10px; border: 2px solid var(--neon-cyan);"></div>
+                    <p style="color: var(--neon-cyan); font-size: 0.8rem; margin-top: 15px; font-weight: 500;">
+                        <i class="fa-solid fa-qrcode"></i> Scan for Phone Report
+                    </p>
+                </div>
+            </section>
+
+            <section class="patient-info" style="grid-template-columns: 1fr;">
+                <div class="alerts-card">
+                    <div class="alerts-header">
+                        <h2>Recent System Alerts</h2>
+                        <button class="view-all-btn">View All</button>
+                    </div>
+                    <div class="alerts-list" id="alertsList">
+                        <div class="alert-item info">
+                            <i class="fa-solid fa-circle-info"></i>
+                            <span>Waiting for patient selection...</span>
+                            <span class="alert-time">Just now</span>
+                        </div>
+                    </div> 
+                </div> 
+            </section>
+        </main>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+    <script type="module">
+        // Tab + Enter Submit Logic
+        document.getElementById('cardSubmitBtn').addEventListener('click', function() {
+            const patient = document.getElementById('activeName').innerText;
+            // Note: Original alert kept, but script.js will handle the actual logic
+        });
+
+        document.getElementById('cardSubmitBtn').addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                this.click();
+            }
+        });
+    </script>
+    <script type="module" src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+</body>
+</html>

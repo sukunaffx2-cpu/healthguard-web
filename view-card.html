@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HealthGuard Digital Card</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-[#0d1117] text-white flex items-center justify-center min-h-screen p-4">
+    <div id="card" class="bg-[#161b22] border-2 border-[#00f2ff] rounded-3xl p-6 w-full max-w-sm shadow-[0_0_20px_rgba(0,242,255,0.3)]">
+        <div class="text-center mb-6">
+            <h1 class="text-[#00f2ff] text-xl font-bold tracking-widest">HEALTHGUARD</h1>
+            <p class="text-gray-400 text-xs">DIGITAL MEDICAL ID</p>
+        </div>
+
+        <div class="flex items-center gap-4 mb-6 border-b border-gray-700 pb-4">
+            <div class="bg-[#00f2ff] p-3 rounded-full text-black">
+                <i class="fas fa-user-pulse text-2xl"></i>
+            </div>
+            <div>
+                <h2 id="name" class="text-2xl font-bold text-white">--</h2>
+                <p class="text-sm text-gray-400">Age: <span id="age">--</span> | <span id="gender">--</span></p>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 text-center">
+            <div class="bg-[#0d1117] p-3 rounded-xl border border-gray-800">
+                <i class="fas fa-heartbeat text-red-500 mb-1"></i>
+                <p class="text-xs text-gray-500 uppercase">Heart Rate</p>
+                <p class="text-lg font-bold"><span id="hr">--</span> <small class="text-[10px]">BPM</small></p>
+            </div>
+            <div class="bg-[#0d1117] p-3 rounded-xl border border-gray-800">
+                <i class="fas fa-tint text-blue-500 mb-1"></i>
+                <p class="text-xs text-gray-500 uppercase">SPO2</p>
+                <p class="text-lg font-bold"><span id="ox">--</span> <small class="text-[10px]">%</small></p>
+            </div>
+            <div class="bg-[#0d1117] p-3 rounded-xl border border-gray-800">
+                <i class="fas fa-thermometer-half text-orange-500 mb-1"></i>
+                <p class="text-xs text-gray-500 uppercase">Temp</p>
+                <p class="text-lg font-bold"><span id="tp">--</span> <small class="text-[10px]">°F</small></p>
+            </div>
+            <div class="bg-[#0d1117] p-3 rounded-xl border border-gray-800">
+                <div class="text-[10px] text-red-400 font-bold mb-1">BLOOD: <span id="bg">--</span></div>
+                <p class="text-xs text-gray-500 uppercase">Pressure</p>
+                <p class="text-sm font-bold leading-tight mt-1" id="bp">--</p>
+            </div>
+        </div>
+
+        <button onclick="window.print()" class="w-full mt-6 bg-[#00f2ff] text-black font-bold py-3 rounded-xl hover:bg-white transition-all uppercase text-sm">
+            <i class="fas fa-download mr-2"></i> Save Copy
+        </button>
+    </div>
+
+    <script>
+        // URL se data nikalne ka logic
+        const params = new URLSearchParams(window.location.search);
+        const report = params.get('report');
+        if (report) {
+            try {
+                const data = JSON.parse(atob(report));
+                document.getElementById('name').innerText = data.n;
+                document.getElementById('age').innerText = data.a;
+                document.getElementById('bg').innerText = data.bg;
+                document.getElementById('gender').innerText = data.g;
+                document.getElementById('hr').innerText = data.hr;
+                document.getElementById('bp').innerText = data.bp;
+                document.getElementById('ox').innerText = data.ox;
+                document.getElementById('tp').innerText = data.tp;
+            } catch (e) { console.error("Data error"); }
+        }
+    </script>
+</body>
+</html>
